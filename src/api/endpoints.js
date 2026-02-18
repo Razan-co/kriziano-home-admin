@@ -1,7 +1,8 @@
 // api/endpoints.js
 export class ApiEndpoints {
   // Base URL
-  static BASE_URL = 'http://localhost:3333/api/v1';
+//   static BASE_URL = 'http://localhost:3333/api/v1';
+  static BASE_URL = 'https://kriziano-homes.onrender.com/';
 
   // Product Service Endpoints
   static PRODUCT = {
