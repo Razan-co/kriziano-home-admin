@@ -1,0 +1,555 @@
+========================================
+PRODUCT SERVICE API DOCUMENTATION
+========================================
+
+BASE URL:
+http://localhost:3333/api/v1/product
+
+
+========================================
+PUBLIC ENDPOINTS
+========================================
+
+1) GET ALL PRODUCTS
+----------------------------------------
+Method: GET
+Endpoint: /get-products
+
+Full URL:
+http://localhost:3333/api/v1/product/get-products
+
+
+2) GET SINGLE PRODUCT
+----------------------------------------
+Method: GET
+Endpoint: /get-product/:product_id
+
+Example:
+http://localhost:3333/api/v1/product/get-product/123
+
+
+3) GET CATEGORIES
+----------------------------------------
+Method: GET
+Endpoint: /get-categories
+
+Full URL:
+http://localhost:3333/api/v1/product/get-categories
+
+
+========================================
+ADMIN PROTECTED ENDPOINTS
+(Authentication + Admin Authorization Required)
+========================================
+
+4) CREATE PRODUCT
+----------------------------------------
+Method: POST
+Endpoint: /create-product
+
+Full URL:
+http://localhost:3333/api/v1/product/create-product
+
+Required Fields (Body):
+
+- name (string) → REQUIRED
+- description (string) → REQUIRED, minimum 50 characters
+- price (number) → REQUIRED
+- quantity (number) → REQUIRED
+- category (string) → REQUIRED
+- image_url (string) → REQUIRED
+
+Example JSON Body:
+
+{
+  "name": "Sample Product",
+  "description": "This is a sample product description with more than fifty characters.",
+  "price": 999,
+  "quantity": 10,
+  "category": "Electronics",
+  "image_url": "https://example.com/product.jpg"
+}
+
+
+5) UPDATE PRODUCT
+----------------------------------------
+Method: PUT
+Endpoint: /:id
+
+Example:
+http://localhost:3333/api/v1/product/123
+
+
+========================================
+USER AUTHENTICATED ENDPOINTS
+(Authentication Required)
+========================================
+
+6) ADD TO WISHLIST
+----------------------------------------
+Method: POST
+Endpoint: /add-wishlist
+
+Full URL:
+http://localhost:3333/api/v1/product/add-wishlist
+
+
+7) ADD TO CART
+----------------------------------------
+Method: POST
+Endpoint: /add-cart
+
+Full URL:
+http://localhost:3333/api/v1/product/add-cart
+
+
+8) GET CART
+----------------------------------------
+Method: POST
+Endpoint: /get-cart
+
+Full URL:
+http://localhost:3333/api/v1/product/get-cart
+
+
+9) GET WISHLISTS
+----------------------------------------
+Method: POST
+Endpoint: /get-wishlists
+
+Full URL:
+http://localhost:3333/api/v1/product/get-wishlists
+
+
+10) REMOVE FROM CART
+----------------------------------------
+Method: DELETE
+Endpoint: /remove-cart
+
+Full URL:
+http://localhost:3333/api/v1/product/remove-cart
+
+
+11) REMOVE FROM WISHLIST
+----------------------------------------
+Method: DELETE
+Endpoint: /remove-wishlist
+
+Full URL:
+http://localhost:3333/api/v1/product/remove-wishlist
+
+
+========================================
+NOTES
+========================================
+
+• Admin endpoints require authentication + admin role.
+• User endpoints require authentication.
+• Product description must be at least 50 characters.
+• Price and quantity must be numeric values.
+• image_url is required when creating a product.
+
+========================================
+END OF DOCUMENT FIRST DOCUMENT
+========================================
+
+
+========================================
+AUTH SERVICE API DOCUMENTATION
+========================================
+
+BASE URL:
+http://localhost:3333/api/v1/auth
+
+
+========================================
+PUBLIC ENDPOINTS
+========================================
+
+1) CREATE USER (REGISTER)
+----------------------------------------
+Method: POST
+Endpoint: /create-user
+
+Full URL:
+http://localhost:3333/api/v1/auth/create-user
+
+Required Fields (Body):
+
+- name (string) → REQUIRED
+- email (string) → REQUIRED, must be valid email
+- password (string) → REQUIRED, 6 to 20 characters
+- phone (string) → REQUIRED, valid Indian mobile number
+
+Example JSON Body:
+
+{
+  "name": "Mohammed",
+  "email": "mohammed@example.com",
+  "password": "password123",
+  "phone": "9876543210"
+}
+
+
+2) LOGIN USER
+----------------------------------------
+Method: POST
+Endpoint: /login
+
+Full URL:
+http://localhost:33333/api/v1/auth/login
+
+Required Fields (Body):
+
+- email (string) → REQUIRED, must be valid email
+- password (string) → REQUIRED, 6 to 20 characters
+
+Example JSON Body:
+
+{
+  "email": "mohammed@example.com",
+  "password": "password123"
+}
+
+
+========================================
+AUTHENTICATED ENDPOINTS
+(Authentication Required)
+========================================
+
+3) GET CURRENT USER
+----------------------------------------
+Method: GET
+Endpoint: /get-user
+
+Full URL:
+http://localhost:3333/api/v1/auth/get-user
+
+Headers Required:
+
+Authorization: Bearer <token>
+
+Response:
+Returns the authenticated user's details.
+
+
+========================================
+VALIDATION RULES
+========================================
+
+USER REGISTRATION VALIDATION:
+
+• Name must not be empty
+• Email must be valid
+• Password must be between 6 and 20 characters
+• Phone must be a valid Indian mobile number (en-IN)
+
+
+LOGIN VALIDATION:
+
+• Email must be valid
+• Password must be between 6 and 20 characters
+
+
+========================================
+NOTES
+========================================
+
+• /create-user → Public endpoint
+• /login → Public endpoint
+• /get-user → Requires authentication token
+• Validation errors return status 400 with error details
+
+========================================
+END OF DOCUMENT SECOND DOCUMENT
+========================================
+
+
+
+
+========================================
+ORDER SERVICE API DOCUMENTATION
+========================================
+
+BASE URL:
+http://localhost:3333/api/v1/order
+
+
+========================================
+USER AUTHENTICATED ENDPOINTS
+(Authentication + User Authorization Required)
+========================================
+
+1) ADD NEW ADDRESS
+----------------------------------------
+Method: POST
+Endpoint: /create-address
+
+Full URL:
+http://localhost:3333/api/v1/order/create-address
+
+Required Fields (Body):
+
+- fullName (string) → REQUIRED
+- address (string) → REQUIRED
+- city (string) → REQUIRED
+- pincode (string/number) → REQUIRED
+- phone (string) → REQUIRED
+- house_no (string) → OPTIONAL
+- country (string) → OPTIONAL
+- district (string) → OPTIONAL
+
+Example JSON Body:
+
+{
+  "fullName": "Mohammed",
+  "house_no": "12A",
+  "address": "MG Road",
+  "city": "Chennai",
+  "district": "Chennai",
+  "pincode": "600001",
+  "country": "India",
+  "phone": "9876543210"
+}
+
+Response (Success):
+
+{
+  "success": true,
+  "message": "Address created successfully",
+  "address": { ... }
+}
+
+
+2) GET USER ADDRESSES
+----------------------------------------
+Method: GET
+Endpoint: /get-address
+
+Full URL:
+http://localhost:3333/api/v1/order/get-address
+
+Response (Success):
+
+{
+  "success": true,
+  "addresses": [ ... ]
+}
+
+
+3) CREATE ORDER
+----------------------------------------
+Method: POST
+Endpoint: /create-order
+
+Full URL:
+http://localhost:3333/api/v1/order/create-order
+
+Required Fields (Body):
+
+- products (array) → REQUIRED
+    Each item:
+      • productId (string)
+      • quantity (number)
+
+- address (string) → REQUIRED (Address ID)
+
+Example JSON Body:
+
+{
+  "products": [
+    { "productId": "PRODUCT_ID_1", "quantity": 2 },
+    { "productId": "PRODUCT_ID_2", "quantity": 1 }
+  ],
+  "address": "ADDRESS_ID"
+}
+
+Response (Success):
+
+{
+  "success": true,
+  "message": "Order created successfully",
+  "orderId": "ORDER_ID",
+  "razorpay_order_id": "RAZORPAY_ORDER_ID",
+  "amount": 150000,
+  "currency": "INR",
+  "key": "RAZORPAY_KEY_ID"
+}
+
+Notes:
+
+• Creates Razorpay order
+• Amount returned is in paise
+• Order status = pending
+
+
+4) VERIFY PAYMENT
+----------------------------------------
+Method: POST
+Endpoint: /verify-payment
+
+Full URL:
+http://localhost:3333/api/v1/order/verify-payment
+
+Required Fields (Body):
+
+- razorpay_order_id (string) → REQUIRED
+- razorpay_payment_id (string) → REQUIRED
+- razorpay_signature (string) → REQUIRED
+
+Example JSON Body:
+
+{
+  "razorpay_order_id": "order_xxx",
+  "razorpay_payment_id": "pay_xxx",
+  "razorpay_signature": "signature_xxx"
+}
+
+Response (Success):
+
+{
+  "success": true,
+  "message": "Payment verified successfully",
+  "order": { ... }
+}
+
+Notes:
+
+• Updates order status to confirmed
+• Payment status becomes paid
+• Prevents duplicate verification
+
+
+5) GET USER ORDERS
+----------------------------------------
+Method: GET
+Endpoint: /get-orders
+
+Full URL:
+http://localhost:3333/api/v1/order/get-orders
+
+Optional Query Parameter:
+
+?status=pending
+?status=confirmed
+?status=delivered
+?status=cancelled
+
+Example:
+http://localhost:3333/api/v1/order/get-orders?status=pending
+
+Response (Success):
+
+{
+  "success": true,
+  "orders": [ ... ]
+}
+
+If no orders:
+
+{
+  "success": true,
+  "message": "No orders found"
+}
+
+
+========================================
+ADMIN PROTECTED ENDPOINTS
+(Authentication + Admin Authorization Required)
+========================================
+
+6) GET ALL ORDERS (ADMIN)
+----------------------------------------
+Method: GET
+Endpoint: /admin/orders
+
+Full URL:
+http://localhost:3333/api/v1/order/admin/orders
+
+Response (Success):
+
+{
+  "success": true,
+  "orders": [ ... ],
+  "totalOrders": 120,
+  "totalRevenue": 560000
+}
+
+Notes:
+
+• Returns all orders sorted by newest first
+• Includes user name/email
+• Includes product details
+• Provides total orders count
+• Provides total revenue
+
+
+7) UPDATE ORDER STATUS (ADMIN)
+----------------------------------------
+Method: PUT
+Endpoint: /admin/order/:id/status
+
+Full URL Example:
+http://localhost:3333/api/v1/order/admin/order/ORDER_ID/status
+
+Required Fields (Body):
+
+- status (string) → REQUIRED
+
+Possible Values:
+
+- pending
+- confirmed
+- shipped
+- delivered
+- cancelled
+
+Example JSON Body:
+
+{
+  "status": "shipped"
+}
+
+Response (Success):
+
+{
+  "success": true,
+  "message": "Order status updated successfully",
+  "order": { ... }
+}
+
+Notes:
+
+• Sends notification to user
+• Updates order status
+
+
+========================================
+AUTHORIZATION RULES
+========================================
+
+User Endpoints:
+
+• Must be authenticated
+• Must have role: user
+
+Admin Endpoints:
+
+• Must be authenticated
+• Must have role: admin
+
+
+========================================
+IMPORTANT NOTES
+========================================
+
+• Orders use Razorpay for payment processing
+• Payment must be verified to confirm order
+• Address must exist before creating order
+• Products must be valid and available
+• Amounts returned by Razorpay are in paise
+
+========================================
+END OF DOCUMENT 3
+========================================
+
