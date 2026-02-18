@@ -2,7 +2,7 @@
 export class ApiEndpoints {
   // Base URL
   //static BASE_URL = 'https://krizianohome.com/';
-   static BASE_URL = 'https://kriziano-homes.onrender.com/';
+   static BASE_URL = 'https://kriziano-homes.onrender.com';
 
   // Product Service Endpoints
   static PRODUCT = {
