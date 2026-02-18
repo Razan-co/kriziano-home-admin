@@ -6,7 +6,7 @@ const Sidebar = ({ onNavigate, activeView }) => {
 
   return (
     <div className="w-full md:w-64 bg-slate-900 text-white p-5 flex flex-col md:min-h-screen shadow-xl z-10">
-      <h2 className="text-2xl font-bold mb-4 md:mb-8 text-center md:text-left tracking-wide text-indigo-400">ShopIt Admin</h2>
+      <h2 className="text-2xl font-bold mb-4 md:mb-8 text-center md:text-left tracking-wide text-indigo-400">Kriziano home Admin</h2>
       <ul className="list-none p-0 flex flex-row md:flex-col gap-2 overflow-x-auto md:overflow-visible mb-4 md:mb-0">
         <li 
           onClick={() => onNavigate('list')} 
